@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://jqjkl13kjpxx"]
+
+[ext_resource type="Script" path="res://scenes/main/player.gd" id="1_5n8s0"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_cler4"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p25do"]
+
+[sub_resource type="Environment" id="Environment_a00nv"]
+
+[node name="Main" type="Node3D"]
+
+[node name="Scene" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Floor" type="CSGBox3D" parent="Scene"]
+size = Vector3(100, 1, 100)
+
+[node name="Cube" type="CSGBox3D" parent="Scene"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+size = Vector3(1, 4, 1)
+
+[node name="Player" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75513, 1.80851)
+script = ExtResource("1_5n8s0")
+
+[node name="Body" type="MeshInstance3D" parent="Player"]
+mesh = SubResource("CapsuleMesh_cler4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Player"]
+shape = SubResource("CapsuleShape3D_p25do")
+
+[node name="Camera" type="Node3D" parent="Player"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Player/Camera"]
+spring_length = 5.0
+margin = 0.5
+
+[node name="Camera3D" type="Camera3D" parent="Player/Camera/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 3.95869)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_a00nv")
+
+[node name="Sun" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.972223, 0.234056, 0, -0.234056, 0.972223, 2.88991, 5.77034, 0)
